@@ -1,0 +1,102 @@
+/* This stylesheet is used for styling things.
+   It defines what things look like, but not where they are. */
+
+/* Color definitions */
+
+:root {
+    /* --accent-color: #74cacf; */
+    --accent-color: #3b7b99;
+    --accent-color-light: #a3c8d4;
+    --accent-color-dark: #23364a;
+
+    --main-background-color: white;
+
+    --dark-gray: #444444;
+    --light-gray: #eaeaea;
+}
+
+/* General styling */
+body {
+    font-family: 'Source Code Pro', monospace;
+    background: url(assets/noise.png) repeat, var(--accent-color);
+}
+
+div#main-content {
+    max-width: 1000px;
+    margin: auto;
+    margin-top: 3em;
+}
+
+div.tab-pane {
+    background-color: var(--main-background-color);
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-bottom: 2em;
+    border-radius: 0 5px 5px 5px;
+}
+
+button.sidebar-toggle {
+    color: var(--light-gray);
+    border: none;
+    border-radius: 3px;
+    background: var(--accent-color);
+}
+
+/* Links */
+a:hover {
+    color: var(--accent-color-dark);
+}
+
+a {
+    color: var(--accent-color);
+    cursor: pointer;
+}
+
+a.active {
+    color: var(--accent-color-dark);
+}
+
+/* Loading indicator */
+
+div.loading {
+    padding-top: 1em;
+}
+
+img.loading {
+    width: 100px;
+}
+
+/* Refresh indicator */
+
+div.refresh {
+    display: flex;
+    align-items: center;
+}
+
+img.refresh {
+    margin-left: 0.5em;
+}
+
+/* Empty states */
+.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+}
+
+/* Lists */
+
+ul {
+    padding-left: 0;
+}
+
+li {
+    list-style-type: none;
+    margin-bottom: 0.2em;
+}
+
+p.console-line {
+    margin: 0;
+}

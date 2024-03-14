@@ -1,0 +1,31 @@
+<!doctype html>
+<head>
+    <title v-scope>
+        Tetrahedron MUD Webclient
+    </title>
+    <meta name="author" content="HappyTetrahedron">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <script type="module" src="main.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Source Sans Pro' rel='stylesheet'>
+    <link rel="stylesheet" href="layout.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/x-icon" href="assets/favicon.png">
+</head>
+<body>
+    <div v-scope id="main-content">
+        <div id="console">
+            <div id="scrollback">
+                <p class="console-line" v-for="line in consoleLines">
+                    {{ line.text }}
+                </p>
+
+            </div>
+            <div id="input">
+                <form v-on:submit="sendMessage">
+                    <input id="console-input" v-model="consoleInput" placeholder="your text here" />
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
