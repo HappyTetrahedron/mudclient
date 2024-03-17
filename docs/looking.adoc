@@ -1,0 +1,92 @@
+= Sich zurechtfinden
+
+Im MUSH bewegst du dich durch Räume, in welchen sich Dinge befinden.
+Ausgänge verbinden die Räume miteinander.
+Dieses Konzept liegt der ganzen MUSH-Welt zugrunde.
+
+"Räume", "Dinge", "Ausgänge" sind allerdings sehr grobe Kategorien.
+Wenn du einer Strasse entlangläufst, ist jeder Strassenabschnitt ein Raum, und die Ausgänge bezeichnen z.B. Himmelsrichtungen wie Norden und Süden.
+Und Dinge können auch alles Mögliche sein, vom Quietscheenten über Möbelstücke bis hin zu nützlichen Werkzeugen, die programmiert sind, eine Funktion zu erfüllen.
+
+== `look`
+Beschreibung:: Zeigt dir deine aktuelle Umgebung
+Kurzform:: `l`
+
+----
+$ look
++---< Gnu Street >-----------------------------+
+Gnu Street runs from east to west. The street is lined with block houses here, obstructing your view of the
+river. <1>
++----------------------------------------------+
+Contents:
+signpost <2>
+Alinea
+Obvious exits:
+west leads to Luna Street/Gnu Street crossing.
+east leads to Apollo Square.
+north leads to anteroom. <3>
+----
+<1> Hier steht immer die Beschreibung des Raumes, die vom Ersteller desselben festgelegt wurde. Oder es steht gar nix, wenn der Ersteller zu faul war, etwas zu schreiben.
+<2> Unter "Contents" stehen alle Dinge, die sich hier befinden. Das beinhaltet auch andere Spieler.
+<3> Unter "Obvious exits" stehen die Ausgänge, also, in welche Richtungen du dich hier bewegen kannst. Manchmal steht auch, wo die Ausgänge hinführen - aber nicht immer. 
+
+== `look <something>`
+Beschreibung:: Zeigt dir Details zu einem Ding,
+Kurzform:: `l <something>`
+
+----
+$ l signpost
+A wodden arrow pointing north bears the words "Student Association Shared Flat" in bold letters. Disturbingly, the font is Comic Sans... And someone stuck googly eyes to
+it for some reason.
+----
+
+[TIP]
+====
+Manche Dinge haben ziemlich lange Namen.
+Das wäre dann etwas mühsam, wenn man die immer eintippen würde:
+----
+look paper chemical propulsion hoverboard
+----
+Zum Glück kann man bei allen Kommandos Abkürzungen verwenden, um auf Gegenstände in der Nähe zu verweisen.
+Dazu kann man nur einen Teil eines mehrwörtrigen Namens nennen - z.B. `look paper`, `look propulsion` oder `look hoverboard`.
+Es muss aber eindeutig sein, sonst ist der Server verwirrt.
+
+Für noch mehr Effizienz kann man auch ein eindeutiges Präfix von einem Wort im Namen verwenden, z.B. `look pap`, `look prop`, `look hover`.
+====
+
+== `inventory`
+Beschreibung:: Zeigt dir, was du gerade mit dir rumträgst.
+Kurzform:: `i`
+
+----
+$ inventory
+You are carrying:
+cat ear space suit
+kiwen kipisi
+swim suit
+azhs town map
+paper chemical propulsion hoverboard
+Azh' hoverboard
+Zzerenzzian coin(#287) <1>
+You have 1841 fake internet points. <2>
+----
+<1> Bei Dingen, die dir gehören (also die du selbst erstellt hast), wird in Klammer noch die Datenbank-Referenznummer (dbref) mit angezeigt. Hier ist das `#287`.
+<2> "fake internet points" sind die Währung in unserer Welt. Sie werden gebraucht, um z.B. Gegenstände zu erstellen - es ist ein Sicherheitsmechanismus, damit man nicht unendlich viele Gegenstände erstellen kann (was gerne mal aus Versehen passiert, wenn man zu Programmieren beginnt).
+Wenn du mehr Geld brauchst, frag einfach Alinea, dann kriegst du schon noch mehr :)
+
+== `help <command>`
+
+Beschreibung:: Hilfe und Anleitungen zu zahlreichen Themen
+Kurzform:: `h`
+`help` gibt dir gründliche und extensive Hilfe zu jedem beliebigen Kommando.
+Die Hilfe geht oft sehr stark ins Detail und ist dann super, wenn man wirklich alle Spezialfälle wissen möchte.
+----
+help look
+  Command: look[/<switches>] [<object>]
+  Displays the description of <object>, or the room you're in if you don't
+  specify an object.  Specifying object as <name> or #<dbref> or 'me' or
+  'here' is legal.  You can also use look to look at objects held by other
+  people, just use 'look <person>'s <object>'.
+ 
+  See also: @adesc, @describe, @odesc.
+----

@@ -1,0 +1,90 @@
+= Rumlaufen
+
+In unserer Welt gibt es schon einige coole Orte zu entdecken.
+Aber wie kommt man da hin?
+
+== Bewegung
+Beschreibung:: Benutze einen vordefinierten Ausgang, um zu einem neuen Raum zu gelangen.
+
+Die meisten Räume geben dir eine Liste mit "obvious exits".
+Diese Ausgänge kannst du benutzen, um von A nach B zu gelangen.
+Dazu tippst du einfach den Namen des Ausgangs - kein weiterer Befehl nötig.
+
+----
+$ look
++---< anteroom >-------------------------------+
+You are in the anteroom of the student association's shared flat.
+A large decorative plate reads: New here? Type 'look manual' for the basics!
++----------------------------------------------+
+Contents:
+tourist guide
+map printer
+anteroom wiretap
+manual plate
+coat hook
+Obvious exits:
+out leads to Gnu Street.
+north leads to living room.
+
+$ out <1>
++---< Gnu Street >-----------------------------+
+Gnu Street runs from east to west. The street is lined with block houses here,
+obstructing your view of the river. <2>
++----------------------------------------------+
+Contents:
+little boxes
+signpost
+Obvious exits:
+west leads to Luna Street/Gnu Street crossing.
+east leads to Apollo Square.
+north leads to anteroom.
+
+$ w <3>
++---< Luna Street/Gnu Street crossing >--------+
+Luna Street runs north-to-south while Gnu Street runs east-to-west. Luna Street
+is clearly much bigger, though. To the east you can see Apollo Square in the
+distance. To
+the far north you see the river flowing by.
++----------------------------------------------+
+Contents:
+homeless man
+ice cream stand
+Obvious exits:
+north  east  south
+
+$ w <4>
+Whisper to whom?
+----
+<1> Da steht `out leads to Gnu Street`, also muss ich nur `out` tippen um zur Gnu Street zu gelangen.
+<2> Wenn ich in einen neuen Raum gelange, wird immer automatisch die Beschreibung des Raums angezeigt, als ob ich `look` getippt hätte.
+<3> Die meisten Ausgänge haben eine Kurzform, die man auch verwenden kann.
+Bei Himmelsrichtungen sind `n` `e` `w` `s` sowie `ne` `nw` `se` `sw` gängig.
+Allerdings kann es sein, dass das mal nicht klappt - diese Kurzformen müssen nämlich für jeden einzelnen Ausgang separat definiert werden.
+<4> Hier geht's nicht weiter nach Westen - der Befehl `w` wird darum als die Kurzform für `whisper` erkannt und ich krieg eine verwirrende Fehlermeldung.
+
+== `home`
+Beschreibung:: Bringt dich nach Hause
+
+Wenn du dich mal völlig verlaufen hast, kannst du jederzeit `home` eintippen um zu deinem vordefinierten Zuhause zu gelangen.
+Standardmässig ist dein Zuhause der anteroom - der erste Raum, in dem du nach der Charaktererstellung auftauchst.
+
+----
+$ home
+There's no place like home...
+There's no place like home...
+There's no place like home...
+
++---< anteroom >-------------------------------+
+You are in the anteroom of the student association's shared flat.
+A large decorative plate reads: New here? Type 'look manual' for the basics!
++----------------------------------------------+
+Contents:
+tourist guide
+map printer
+anteroom wiretap
+manual plate
+coat hook
+Obvious exits:
+out leads to Gnu Street.
+north leads to living room.
+----

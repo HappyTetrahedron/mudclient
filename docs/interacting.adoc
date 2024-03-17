@@ -1,0 +1,152 @@
+= Mit der Welt interagieren
+
+Man kann im Mush natürlich mehr machen als nur rumlaufen und gucken.
+Aber was genau möglich ist, hängt von der Situation ab.
+
+== `take <something>`
+Beschreibung:: Heb ein Ding auf.
+
+----
+$ look
++---< anteroom >-------------------------------+
+You are in the anteroom of the student association's shared flat.
+A large decorative plate reads: New here? Type 'look manual' for the basics!
++----------------------------------------------+
+Contents:
+Alinea
+tourist guide
+map printer
+anteroom wiretap
+manual plate
+little boxes
+incandescent turquoise petunia
+coat hook
+Obvious exits:
+out leads to Gnu Street.
+north leads to living room.
+
+$ take boxes
+Taken.
+
+$ inv
+You are carrying:
+little boxes
+cat ear space suit
+
+$ take manual plate
+The plate is bolted to the wall. <1>
+----
+<1> Dieses Ding ist wohl "abgeschlossen" - der Ersteller wollte nicht, dass es mitgenommen wird.
+
+== `drop <something>`
+Beschreibung:: Lass ein Ding liegen.
+
+Wer nehmen kann, kann auch geben.
+Mit `drop` kannst du ein Ding aus deinem Inventar in den aktuellen Raum schmeissen.
+
+----
+$ drop little boxes
+Dropped.
+
+$ look
++---< Gnu Street >-----------------------------+
+Gnu Street runs from east to west. The street is lined with block houses here, obstructing your view of the river.
++----------------------------------------------+
+Contents:
+little boxes
+signpost
+Obvious exits:
+west leads to Luna Street/Gnu Street crossing.
+east leads to Apollo Square.
+north leads to anteroom.
+----
+
+
+== `give <recipient>=<something>`
+Beschreibung:: Gib ein Ding weiter an jemand oder etwas Anderes
+
+Mit `give` kannst du jemandem etwas geben.
+Zwischen dem Empfänger und dem Ding steht ein `=` - das muss da sein, weil die Namen von Dingen ja aus mehreren Wörtern bestehen können.
+Mit dem `=` wird sichergestellt, dass eindeutig klar ist, was was ist.
+
+Um etwas zu geben, musst du es natürlich im Inventar haben - es reicht nicht, wenn das Ding nur im gleichen Raum ist wie du.
+
+----
+$ give alinea=swim suit
+Given.
+
+Alinea gave you swim suit. <1>
+----
+<1> Aha! Alinea hat mir den Badeanzug mit demselben Befehl zurückgegeben!
+
+Es ist übrigens egal, ob der Empfänger ein Spieler oder ein Ding ist.
+Wenn man etwas an ein Ding gibt, wird das Etwas in dem Ding abgelegt - das Ding fungiert als Behälter.
+Ach, das macht mit einem Beispiel mehr Sinn:
+----
+$ i
+You are carrying:
+treasure chest
+swim suit
+cat ear space suit
+paper chemical propulsion hoverboard
+You have 1831 fake internet points.
+
+$ give treasure chest=swim suit
+Given.
+$ give treasure chest=space suit
+Given.
+$ give treasure chest=paper chemical propulsion hoverboard
+Given.
+
+$ i
+You are carrying:
+treasure chest
+You have 1831 fake internet points.
+
+$ look treasure chest
+treasure chest
+It's a treasure chest. Many valuable things are contained within.
+Carrying: <1>
+paper chemical propulsion hoverboard
+cat ear space suit
+swim suit
+
+$ take chest's swim suit <2>
+Taken.
+$ take chest's hoverboard
+Taken.
+$ take chest's space suit
+Taken.
+$ i
+You are carrying:
+treasure chest
+swim suit
+cat ear space suit
+paper chemical propulsion hoverboard
+You have 1831 fake internet points.
+
+----
+<1> Standardmässig sieht man, was für andere Dinge in einem Ding enthalten sind, wenn man das Ding mit `look` anschaut.
+<2> Mit `take x's y` kann man dann Dinge wieder aus dem Behälter rausnehmen.
+
+
+== `use <something>`
+Beschreibung:: Verwende eine vorprogrammierte Funktion in einem Ding.
+
+`use` ist ein standardisierter Weg, mit Dingen zu interagieren.
+Es funktioniert aber nicht bei allem.
+`use` klappt nur dann, wenn der Ersteller des Dings irgendeine Funktion in das Ding rein programmiert hat.
+
+----
+$ use tourist guide
+You can't figure out how to use that. <1>
+$ use map printer
+You push the big green button on the printer, and with a loud whirring noise, it spits out a town map. <2>
+$ i
+You are carrying:
+azhs town map <3>
+----
+<1> Hier wurde wohl keine Funktion rein programmiert.
+<2> Hier aber schon! Diese Nachricht wurde vom Ersteller des Druckers gesetzt.
+<3> Und tatsächlich habe ich jetzt eine Karte im Inventar.
+Die wurde vom Programm des Druckers erstellt.

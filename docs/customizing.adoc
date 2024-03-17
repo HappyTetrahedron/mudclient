@@ -1,0 +1,72 @@
+= Deine Spielfigur
+
+Deine Spielfigur ist deine Repräsentation im MUSH.
+Sie bestimmt, was andere Leute sehen, wenn sie dich anschauen.
+Wenn du dich gerade erst angemeldet hast, dann hast du nur einen Namen, aber noch keine Beschreibung.
+Wenn dich dann jemand anschaut, kommt die Meldung `You see nothing special.`
+
+Das stimmt natürlich nicht - du bist viel mehr als `nothing special`!
+Also beheben wir das besser fix.
+
+INFO:: Einige der folgenden Kommandos haben ein @ vorne dran.
+Grundsätzlich: @-Kommandos verändern die Welt.
+Kommandos ohne @ sind nur informativ.
+
+== `@desc <object>=<description>`
+
+Beschreibung:: Setzt die Beschreibung von einem Objekt.
+
+Beschreibungen von Spielfiguren werden genau gleich gesetzt wie Beschreibungen von anderen Dingen.
+
+Die Beschreibung wird anderen angezeigt, wenn sie dich anschauen.Du solltest die also nicht aus der ersten Person schreiben.
+
+----
+$ @desc me=A wonderful being full of fun.
+Set.
+$ look me <1>
+A wonderful being full of fun.
+----
+<1> "me" ist ein Schlüsselwort, mit dem man auf sich selbst verweisen kann.
+Du könntest gleichermassen auch deinen Spielernamen verwenden.
+
+== `@lock <object>=<lock>`
+Beschreibung:: Beschränkt, wer dich aufheben (ins Inventar nehmen) darf.
+
+Standardmässig sind alle Objekte - auch Spieler - unverschlossen.
+Das heisst, dass jede:r sie aufheben und mitnehmen kann.
+Stell dir vor, du gehst deines Weges, und plötzlich kommt jemand und packt dich ein - gar nicht lustig.
+
+Um das zu verhindern, empfehle ich wärmstens, dich selbst abzuschliessen.
+
+----
+$ @lock me=me <1>
+Locked.
+$ @fail me=You try to pick up azh, but she hisses at you. You decide it's a bad idea anyway. <2>
+Set.
+----
+<1> Mit `@lock me=me` wird der Schlüssel auf dich selbst gesetzt - also niemand ausser dir darf dich aufheben.
+Allerdings kann man sich nicht selbst aufheben, also kann's jetzt effektiv gar niemand.
+<2> Optional kannst du deine `@fail` Nachricht setzen.
+Diese wird dann angezeigt, wenn jemand versucht dich aufzuheben, es aber aufgrund des Locks nicht kann.
+
+== `@sex <object>=<pronoun-descriptor>`
+Beschreibung:: Bestimmt, welche Pronomen für dich verwendet werden sollen.
+
+TinyMUSH ist Software aus den 70ern, daher ist es doch noch etwas shaky, wie mit Gender umgegangen wird.
+Wenn man aber von den Bezeichnungen absieht, funktioniert das System einigermassen sinnvoll:
+Der Wert des `@sex` Attributs bestimmt nämlich, welche Pronomen verwendet werden. Zur Verfügung stehen `he/him`, `she/her`, `they/them` oder `it/it`.
+
+Dabei gilt folgendes:
+
+* Wenn das Attribut mit `m` beginnt, kriegst du `he/him`.
+* Wenn das Attribut mit `f` oder `w` beginnt, kriegst du `she/her`.
+* Wenn das Attribut mit `p` beginnt, kriegst du `they/them`.
+* Und wenn es mit irgendwas Anderem beginnt, kriegst du `it/it`.
+
+Meine Empfehlung ist, das `@sex` Attribut auf etwas möglichst Einfallsreiches zu setzen.
+
+----
+$ @sex me=Warum??? <1>
+Set.
+----
+<1> Beginnt mit `w`, also krieg ich `she/her`.
