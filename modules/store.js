@@ -13,6 +13,12 @@ export const store = reactive({
         return this.consoleLines.filter(it => it.source === "me");
     },
 
+    get consoleLinesReversed() {
+        var copy = this.consoleLines.map(it => it);
+        copy.reverse();
+        return copy;
+    },
+
     sendMessage(event) {
         event.preventDefault();
         if (!this.connected) {
