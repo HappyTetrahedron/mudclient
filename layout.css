@@ -1,2 +1,45 @@
 /* This stylesheet is used for arranging things on the page.
    It defines where things are, but not what they look like. */
+
+html {
+   height: 100%;
+}
+
+body {
+   height: calc(100% - 6em);
+   padding: 0;
+   margin: 0;
+}
+
+div#main-content {
+   height: 100%;
+   max-width: 1400px;
+   margin: auto;
+   margin-top: 3em;
+}
+
+@media screen and (max-width: 1400px) {
+   body {
+      height: 100%;
+   }
+   div#main-content {
+      margin-top: 0;
+   }
+}
+
+div#console {
+   padding: 2em;
+   height: calc(100% - 4em);
+}
+
+div#scrollback {
+   height: calc(100% - 30px);
+   overflow: auto;
+   display: flex;
+   flex-direction: column-reverse;
+}
+
+div#input {
+   padding-top: 0.5em;
+   margin-top: 0.5em;
+}

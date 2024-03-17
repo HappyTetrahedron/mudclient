@@ -16,14 +16,18 @@
     <div v-scope id="main-content">
         <div id="console">
             <div id="scrollback">
-                <p class="console-line" v-for="line in consoleLines">
+                <p 
+                    class="console-line" 
+                    :class="line.source"
+                    v-for="line in consoleLines.toReversed()"
+                >
                     {{ line.text }}
                 </p>
 
             </div>
             <div id="input">
-                <form v-on:submit="sendMessage">
-                    <input id="console-input" v-model="consoleInput" placeholder="your text here" />
+                <form v-on:submit="sendMessage" autocomplete="off">
+                    <input id="console-input" v-model="consoleInput" placeholder="enter command..." @keydown="processKeyEvent" autocomplete="off"/>
                 </form>
             </div>
         </div>

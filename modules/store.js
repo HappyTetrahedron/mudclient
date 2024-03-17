@@ -6,9 +6,11 @@ export const store = reactive({
     consoleInput: "",
     connected: false,
     server: null,
+    historyPos: 0,
+    draftInput: "",
 
-    get getExampleInput() {
-        return this.consoleInput;
+    get sentLines() {
+        return this.consoleLines.filter(it => it.source === "me");
     },
 
     sendMessage(event) {
@@ -19,6 +21,23 @@ export const store = reactive({
         this.server.send(this.consoleInput);
         this.appendConsoleSendLine(this.consoleInput);
         this.setInput("");
+        this.historyPos = 0;
+    },
+
+    processKeyEvent(event) {
+        if (event.keyCode == '38') { // up
+            event.preventDefault();
+            if (this.historyPos === 0) {
+                this.draftInput = this.consoleInput;
+            }
+            this.historyPos = this.historyPos - 1;
+            this.consoleInput = this.sentLines.at(this.historyPos).text;
+        }
+        if (event.keyCode == '40' && this.historyPos < 0) { // down
+            event.preventDefault();
+            this.historyPos = this.historyPos + 1;
+            this.consoleInput = this.historyPos === 0 ? this.draftInput : this.sentLines.at(this.historyPos).text;
+        }
     },
 
     appendConsoleLine(line) {
@@ -26,12 +45,21 @@ export const store = reactive({
             'text': line,
             'source': 'them',
         })
+        window.localStorage.setItem("lines", JSON.stringify(this.consoleLines.filter(it => it.source != "meta")));
     },
 
     appendConsoleSendLine(line) {
         this.consoleLines.push({
             'text': line,
             'source': 'me',
+        })
+        window.localStorage.setItem("lines", JSON.stringify(this.consoleLines.filter(it => it.source != "meta")));
+    },
+
+    appendConsoleMetaLine(line) {
+        this.consoleLines.push({
+            'text': line,
+            'source': 'meta',
         })
     },
 
@@ -52,17 +80,23 @@ export const store = reactive({
 
     async init() {
         try {
+            var lines = window.localStorage.getItem("lines");
+            if (!!lines) {
+                this.consoleLines = JSON.parse(lines);
+            }
             this.server = await Api.connect();
             this.server.onmessage = function(evt) {
                 this.appendConsoleLines(evt.data);
             }.bind(this);
             this.server.onclose = function(evt) {
+                this.appendConsoleMetaLine("Connection closed. Refresh to re-connect.")
                 this.setConnected(false);
             }.bind(this);
             this.connected = true;
         }
         catch (error) {
-            console.log("Could not establish websocket connection.", error)
+            console.log("Could not establish websocket connection.", error);
+            this.appendConsoleMetaLine("Unable to connect. Try refreshing, or yell at Aline if that also doesn't work.")
         }
     }
 })

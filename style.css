@@ -5,41 +5,18 @@
 
 :root {
     /* --accent-color: #74cacf; */
-    --accent-color: #3b7b99;
-    --accent-color-light: #a3c8d4;
-    --accent-color-dark: #23364a;
+    --accent-color: #99af64;
 
-    --main-background-color: white;
-
-    --dark-gray: #444444;
-    --light-gray: #eaeaea;
+    --console-background: #080808;
+    --console-text: #dedede;
+    --console-soft: #777777;
+    --console-highlight: #99bb63;
 }
 
 /* General styling */
 body {
     font-family: 'Source Code Pro', monospace;
     background: url(assets/noise.png) repeat, var(--accent-color);
-}
-
-div#main-content {
-    max-width: 1000px;
-    margin: auto;
-    margin-top: 3em;
-}
-
-div.tab-pane {
-    background-color: var(--main-background-color);
-    padding-left: 1em;
-    padding-right: 1em;
-    padding-bottom: 2em;
-    border-radius: 0 5px 5px 5px;
-}
-
-button.sidebar-toggle {
-    color: var(--light-gray);
-    border: none;
-    border-radius: 3px;
-    background: var(--accent-color);
 }
 
 /* Links */
@@ -97,6 +74,59 @@ li {
     margin-bottom: 0.2em;
 }
 
+/* console */
+
+div#console {
+    color: var(--console-text);
+    background: url(assets/noise.png) repeat var(--console-background);
+}
+
+div#input {
+    border-top: solid 1px var(--console-soft);
+}
+
 p.console-line {
     margin: 0;
+}
+
+.console-line.me {
+    color: var(--console-highlight);
+}
+
+.console-line.meta {
+    font-weight: bold;
+}
+
+/* input */
+input#console-input {
+    width: 100%;
+    background-color: var(--console-background);
+    color: var(--console-text);
+    border: none;
+    outline: none;
+    font-family: 'Source Code Pro', monospace;
+    caret-color: var(--console-soft);
+    caret-shape: block;
+}
+
+input#console-input:focus {
+    border: none;
+}
+
+/* scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--console-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--console-soft);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--console-text);
 }
