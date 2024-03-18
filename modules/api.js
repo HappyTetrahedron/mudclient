@@ -11,3 +11,8 @@ export function connect() {
         }
     })
 }
+
+export async function fetchApi() {
+    let response = await fetch(Config.API_URI);
+    return await response.json();
+}

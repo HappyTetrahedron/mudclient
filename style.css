@@ -6,6 +6,8 @@
 :root {
     /* --accent-color: #74cacf; */
     --accent-color: #99af64;
+    --link-color: #444e2c;
+    --link-color-dark: #202512;
 
     --console-background: #080808;
     --console-text: #dedede;
@@ -15,17 +17,21 @@
 
 /* General styling */
 body {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Source Sans Pro', sans-serif;
     background: url(assets/noise.png) repeat, var(--accent-color);
+}
+
+div#console {
+    font-family: 'Source Code Pro', monospace;
 }
 
 /* Links */
 a:hover {
-    color: var(--accent-color-dark);
+    color: var(--link-color-dark);
 }
 
 a {
-    color: var(--accent-color);
+    color: var(--link-color);
     cursor: pointer;
 }
 
@@ -129,4 +135,78 @@ input#console-input:focus {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--console-text);
+}
+
+/* sidepane */
+div#sidepane {
+    background: url(assets/noise.png) repeat, var(--accent-color);
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: x-small;
+}
+
+div#sidepane.none {
+    background: transparent;
+}
+
+div#sidepane-buttons button {
+    color: var(--console-text);
+    background: rgba(0, 0, 0, 0.4);
+    border: 0;
+}
+
+div.none div#sidepane-buttons button {
+    color: var(--console-background);
+    background: rgba(255, 255, 255, 0.4);
+}
+
+div#sidepane-buttons button:hover {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+div.none div#sidepane-buttons button:hover {
+    background: rgba(255, 255, 255, 0.7);
+}
+
+/* manual */
+
+div.colist > ol {
+    counter-reset: list;
+    margin-left: -10px;
+}
+
+div.colist > ol > li {
+    list-style: none;
+    position: relative;
+}
+div.colist > ol > li:before {
+    counter-increment: list;
+    content: "(" counter(list, decimal) ") ";
+    position: absolute;
+    left: -1.4em;
+}
+
+div#manual dl {
+    display: flex;
+    flex-direction: row;
+}
+
+div#manual dt {
+    font-weight: bold;
+    width: 50px;
+}
+
+div#manual dd {
+    width: calc(100% - 50px);
+}
+
+div#manual dd > p {
+    padding: 0;
+    margin: 0;
+}
+
+div#manual pre {
+    background: url(assets/noise.png) repeat var(--console-background);
+    padding: 10px;
+    color: var(--console-text);
 }

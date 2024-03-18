@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <script type="module" src="main.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Source Sans Pro' rel='stylesheet'>
     <link rel="stylesheet" href="layout.css" />
     <link rel="stylesheet" href="style.css" />
@@ -29,6 +32,33 @@
                 <form v-on:submit="sendMessage" autocomplete="off">
                     <input id="console-input" v-model="consoleInput" placeholder="enter command..." @keydown="processKeyEvent" autocomplete="off"/>
                 </form>
+            </div>
+        </div>
+        <div id="sidepane" :class="sidebarPane">
+            <div id="sidepane-buttons">
+                <button v-if="sidebarPane != 'none'" @click="closeSidebar">x</button>
+                <button @click="activateHelp">?</button>
+                <button @click="activateState">!</button>
+            </div>
+            <div id="sidepane-spacer"></div>
+            <div v-if="sidebarPane == 'state'" id="state">
+                <h3>Currently online:</h3>
+                <ul>
+                    <li v-for="player in gameState.players">
+                        <p>{{ player.name }} (Location: {{ player.location }})</p>
+                    </li>
+                </ul>
+            </div>
+            <div v-if="sidebarPane == 'help'" id="manual">
+                <div id="manual-nav">
+                    <h3>Help topics:</h3>
+                    <ul v-for="page in helpPages">
+                        <li>
+                            <a @click="switchDoc(page.file)">{{ page.title }}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="manual-content"></div>
             </div>
         </div>
     </div>

@@ -9,6 +9,30 @@ export const store = reactive({
     historyPos: 0,
     draftInput: "",
 
+    gameState: {},
+
+    sidebarPane: "none",
+    helpPages: [
+        {
+            file: "looking",
+            title: "Sich zurechtfinden",
+        },
+        {
+            file: "interacting",
+            title: "Mit der Welt interagieren",
+        },
+        {
+            file: "moving",
+            title: "Rumlaufen",
+        },
+        {
+            file: "customizing",
+            title: "Deine Spielfigur",
+        },
+    ],
+    currentPage: "",
+
+
     get sentLines() {
         return this.consoleLines.filter(it => it.source === "me");
     },
@@ -84,6 +108,27 @@ export const store = reactive({
         this.connected = connected;
     },
 
+    setGameState(state)  {
+        this.gameState = state
+    },
+
+    closeSidebar(evt) {
+        this.sidebarPane = "none";
+    },
+
+    activateHelp(evt) {
+        this.sidebarPane = "help";
+    },
+
+    activateState(evt) {
+        this.sidebarPane = "state";
+    },
+
+    switchDoc(newPage) {
+        this.currentPage = newPage;
+        updatePageContent(this.currentPage);
+    },
+
     async init() {
         try {
             var lines = window.localStorage.getItem("lines");
@@ -99,6 +144,9 @@ export const store = reactive({
                 this.setConnected(false);
             }.bind(this);
             this.connected = true;
+             setInterval(() => {
+                Api.fetchApi().then(json => this.setGameState(json))
+             }, 5000)
         }
         catch (error) {
             console.log("Could not establish websocket connection.", error);
@@ -106,3 +154,10 @@ export const store = reactive({
         }
     }
 })
+
+
+let updatePageContent = async (page) => {
+    let resp = await fetch(`/docs/${page}.html`);
+    let text = await resp.text();
+    document.getElementById("manual-content").innerHTML = text;
+}
