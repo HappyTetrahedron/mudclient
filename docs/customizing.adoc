@@ -70,3 +70,9 @@ $ @sex me=Warum??? <1>
 Set.
 ----
 <1> Beginnt mit `w`, also krieg ich `she/her`.
+
+== Weiteres
+
+Alles, was du mit normalen Dingen im MUSH machen kannst, kannst du auch auf deiner Spielfigur machen.
+Du kannst dich selbst also mit Programmen ausstatten, oder deine eigenen Attribute setzen, und das wird sich genauso verhalten wie wenn du dasselbe bei einem Ding machst.
+Im Kapitel zum Erstellen von Dingen lernst du dazu mehr.

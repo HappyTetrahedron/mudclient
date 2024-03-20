@@ -1,0 +1,100 @@
+= Dinge erstellen
+
+Wir wollen nicht nur rumlaufen und gucken, wir wollen auch was Eigenes bauen.
+Dazu lernen wir erstmal, wie man Dinge erstellt.
+
+
+INFO:: Einige der folgenden Kommandos haben ein @ vorne dran.
+Grundsätzlich: @-Kommandos verändern die Welt.
+Kommandos ohne @ sind nur informativ.
+
+== `@create <something>`
+
+Beschreibung:: Erstellt ein neues Ding und ploppt es in dein Inventar
+Kosten:: 10 Fake Internet Points
+
+----
+$ i
+You are carrying:
+hammer
+You have 500 fake internet points.
+$ @create nail
+nail created as object #1133 <1>
+$ i
+You are carrying:
+nail(#1133) <2>
+hammer
+You have 490 fake internet points. <3>
+$ look nail
+nail(#1133)
+You see nothing special. <4>
+----
+<1> Der `@create` Befehl sagt uns immer direkt, was das neue Objekt für eine Datenbankreferenz (dbref) hat.
+<2> Wenn wir ein selbst-erstelltes Objekt sehen, steht in Klammer immer die dbref mit dabei.
+<3> Ein Objekt erstellen kostet Geld. Das ist vor Allem ein Sicherheits-Feature.
+<4> Das neue Objekt hat noch keine Beschreibung, darum steht hier dieser Standardsatz.
+
+== `@describe <something>=description`
+
+Beschreibung:: Weist einem Ding eine Beschreibung zu, die angezeigt wird, wenn man es mit `look` anschaut.
+Kurzform:: `@desc`
+
+Beschreibungen sind das A und O im MUSH. Jedes Ding sollte eine haben.
+
+----
+$ l nail
+nail(#1133)
+You see nothing special.
+$ @desc nail=Where there's a nail, there's a hammer not far.
+Set.
+$ l nail 
+nail(#1133)
+Where there's a nail, there's a hammer not far.
+----
+
+TIP: `@desc` ist ein MUSH-Verb, es gibt also auch @odesc und @adesc - siehe auch das Thema "Verben"
+
+== `@destroy <something>`
+
+Beschreibung:: Zerstört ein Ding
+Kosten:: -10 Fake Internet Points
+
+----
+$ @destroy nail
+The thing shakes and begins to crumble.
+You will be rewarded shortly for nail(#1133).
+$ i
+You are carrying:
+nail(#1133G) <1>
+hammer
+You have 490 fake internet points.
+
+
+You get back your 10 fake internet point deposit for nail(#1133). <2>
+$ i
+You are carrying:
+hammer
+You have 500 fake internet points.
+----
+<1> Das Ding verschwindet nicht sofort - es wird nach einer gewissen Zeit dann aufgeräumt. Bis dahin kriegt es die markierung `G` direkt nach der dbref - `G` steht für `Going` oder `Garbage` (je nachdem wen man fragt).
+<2> Nach ner Weile kommt dann diese Nachricht. Jetzt ist das Ding endgültig weg, und ich krieg mein Geld zurück.
+
+== `@use <something>`
+
+Beschreibung:: Weist einem Ding eine Beschreibung zu, die angezeigt wird, wenn man es mit `use` benutzt.
+
+----
+$ i
+You are carrying:
+nail(#1134)
+You have 490 fake internet points.
+$ use nail
+You can't figure out how to use that. <1>
+$ @use nail=You prick your own thumb on the nail.
+Set.
+use nail
+You prick your own thumb on the nail.
+----
+<1> Dieser Standardsatz steht da, wenn `@use` nicht gesetzt ist.
+
+TIP: Auch `@use` ist ein MUSH-Verb, es gibt also auch @ouse und @ause - siehe auch das Thema "Verben"

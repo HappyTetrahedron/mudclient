@@ -1,0 +1,82 @@
+= Verben
+
+Nein, es geht nicht um Grammatik.
+Verben sind ein MUSH-Konzept, das recht oft vorkommt, und mit dem man Dinge konfigurieren kann.
+
+
+== Verb-Attribute
+
+Jedes Objekt hat Attribute.
+Dazu gehört zum Beispiel das `Sex` Attribut, das die Pronomen eines Objekts bestimmt, oder das `Desc`  Attribut, das die Beschreibung eines Objekts beinhaltet.
+
+Manche, aber nicht alle, Attribute fungieren als Verben.
+Ein "Verb" ist ein Triplet von Attributen, die ausgelöst werden, wenn etwas Bestimmtes passiert. (Beispiel: jemand sieht mit `look` die Beschreibung eines Dings an.)
+Es gibt immer das "normale" Verb, das O-Verb und das A-Verb.
+
+Das normale Verb beinhaltet Text, der dem Spieler angezeigt wird, welcher das Verb ausgelöst hat. (Beispiel: wenn Lilly `look plant` tippt, sieht sie das Desc Attribut der `plant`.)
+
+Das O-Verb beinhaltet Text, der allen anderen Spielern angezeigt wird, die gerade im gleichen Raum sind. Das O steht für "Others". (Beispiel: wenn Lilly `look plant` tippt, sieht Azh, die nebenan steht, das ODesc Attribut der `plant`.)
+Dem Text wird jeweils der Name der Person, welche das Verb ausgelöst hat, vorne angehängt.
+
+Das A-Verb beinhaltet ein Programm, das immer dann ausgeführt wird, wenn das Verb ausgelöst wird. Das A steht für "Automation". (Beispiel: wenn Lilly `look plant` tippt, dann führt die `plant` ihr ADesc-Programm aus.)
+
+=== Beispiel
+
+Lilly's Konsole sieht so aus:
+----
+$ @create plant
+plant created as object #1133
+$ drop plant
+Dropped.
+$ @desc plant=The plant smells of cinnamon.
+Set.
+$ @odesc plant=sniffs a plant, sighing contentedly.
+Set.
+$ @adesc plant=:sways in the wind
+Set.
+$ l plant
+plant(#1133)
+The plant smells of cinnamon. <1>
+plant sways in the wind <2>
+----
+
+Azh's Konsole sieht hingegen so aus:
+----
+Lilly dropped plant.
+Lilly sniffs a plant, sighing contentedly. <3>
+plant sways in the wind <2>
+----
+<1> Lilly sieht genau das, was sie als `@desc` gesetzt hat.
+<2> Die `plant` selbst führt das Programm aus, welches Lilly mit `@adesc` gesetzt hat.
+Das Programm ist `:sways in the wind` - das führt dazu, dass alle Spieler im Raum `plant sways in the wind` sehen. (Siehe auch `help pose`)
+<3> Azh sieht das, was Lilly mit `@odesc` gesetzt hat. Lilly's Name wird automatisch vornedran gestellt.
+
+== Das `@use` Verb
+
+Eines der nützlichsten Verben, um schnell und bequem interaktive Objekte zu programmieren.
+
+Lilly's Konsole:
+----
+$ @create magical flute
+magical flute created as object #1135
+$ @use flute=You're not sure how it's played, but you try anyway. Despite your 
+  lack of skill, its tune moves you deeply.
+Set.
+$ @ouse flute=takes out a nice looking flute and starts playing. The resulting 
+  screeching noises make you want to run away and hide.
+Set.
+$ give azh=flute
+Given.
+
+azh takes out a nice looking flute and starts playing. The resulting screeching
+noises make you want to run away and hide.
+----
+
+Azh's Konsole:
+----
+Lilly gave you magical flute.
+$ use flute
+You're not sure how it's played, but you try anyway. Despite your lack of skill, 
+its tune moves you deeply.
+----
+

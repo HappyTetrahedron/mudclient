@@ -29,6 +29,14 @@ export const store = reactive({
             file: "customizing",
             title: "Deine Spielfigur",
         },
+        {
+            file: "creating",
+            title: "Dinge erstellen",
+        },
+        {
+            file: "verbs",
+            title: "Verben",
+        },
     ],
     currentPage: "",
 

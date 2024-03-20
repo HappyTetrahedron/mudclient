@@ -78,6 +78,7 @@ Wenn du mehr Geld brauchst, frag einfach Alinea, dann kriegst du schon noch mehr
 
 Beschreibung:: Hilfe und Anleitungen zu zahlreichen Themen
 Kurzform:: `h`
+
 `help` gibt dir gründliche und extensive Hilfe zu jedem beliebigen Kommando.
 Die Hilfe geht oft sehr stark ins Detail und ist dann super, wenn man wirklich alle Spezialfälle wissen möchte.
 ----
