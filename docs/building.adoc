@@ -1,0 +1,133 @@
+= Räume bauen
+
+Um die Welt mitzugestalten, müssen wir natürlich wissen, wie man neue Räume baut und miteinander verbindet.
+
+INFO:: Einige der folgenden Kommandos haben ein @ vorne dran.
+Grundsätzlich: @-Kommandos verändern die Welt.
+Kommandos ohne @ sind nur informativ.
+
+== `@dig <someroom>`
+
+Beschreibung:: Erstellt einen neuen Raum
+Kosten:: 10 Fake Internet Points
+
+----
+$ @dig Azh' Secret Room
+Azh' Secret Room created with room number 23. <1>
+$ @teleport me=#23 <2>
++---< Azh' Secret Room >-----------------------+ <3>
++----------------------------------------------+
+----
+<1> Die `room number` ist einfach die dbref vom neuen Raum.
+<2> Es gibt noch keinen Pfad zu dem neuen Raum.
+Also ist die einzige Option, dort hinzugehen, sich zu teleportieren.
+Man kann sich grundsätzlich nur in seine eigenen Räume teleportieren, und es gibt gewisse Bereiche, aus denen man nicht raus teleportieren darf (z.B. Rätsel).
+Aber im Allgemeinen sollte diese Art von Teleport gehen.
+Und wenn du irgendwo nicht mehr wegkommst, kannst du jederzeit `home` verwenden.
+<3> Dieser Raum hat keine Beschreibung, darum sieht diese Box so doof aus.
+Besser schnell eine Beschreibung setzen!
+
+
+== `@describe <someroom>=<description>`
+
+Beschreibung:: Weist einem Raum eine Beschreibung zu, die angezeigt wird, wenn man den Raum betritt oder sich mit `look` umschaut.
+Kurzform:: `@desc`
+
+Beschreibungen sind das A und O im MUSH. Jeder Raum sollte eine haben.
+
+----
+$ @desc here=It's a secret room. All the things here emanate an air of secrecy. You feel like you're intruding.
+Set.
+$ look
++---< Azh' Secret Room >-----------------------+
+|It's a secret room. All the things here       |
+|emanate an air of secrecy. You feel like      |
+|you're intruding.                             |
++----------------------------------------------+
+----
+
+TIP: `@desc` ist ein MUSH-Verb, es gibt also auch @odesc und @adesc - siehe auch das Thema "Verben"
+
+== `@open <directionlist>=<roomnumber>`
+
+Beschreibung:: Öffnet einen neuen Ausgang aus dem aktuellen Raum heraus, welcher dich zum spezifizierten anderen Raum führt.
+Kosten:: 1 Fake Internet Point
+
+Ausgänge im MUSH sind immer einseitig.
+Wenn zwei Räume miteinander gegenseitig verbunden werden sollen, dann musst du einen Ausgang von Raum A zu Raum B erstellen, und anschliessend noch einen zweiten Ausgang von Raum B zu Raum A.
+Es gibt aber eine Kurzform, mit der man beides auf Einmal machen kann.
+
+----
+$ @dig Azh' Cupboard
+Azh' Cupboard created with room number 25.
+$ @open south;s=#25 <1>
+Opened.
+Linked.<2>
+$ look
++---< Azh' Secret Room >-----------------------+
+|It's a secret room. All the things here       |
+|emanate an air of secrecy. You feel like      |
+|you're intruding.                             |
++----------------------------------------------+
+Obvious exits:
+south <3>
+$ south <4>
++---< Azh' Cupboard >--------------------------+
++----------------------------------------------+
+$ @open north;n=#23 <5>
+Opened.
+Linked.
+$ north
++---< Azh' Secret Room >-----------------------+
+|It's a secret room. All the things here       |
+|emanate an air of secrecy. You feel like      |
+|you're intruding.                             |
++----------------------------------------------+
+----
+<1> Die `directionlist` ist eine Liste von Aliassen, die alle benutzt werden können, um in die Richtung zu gehen.
+Bei Ausgängen gilt nämlich die übliche "längstes passendes Präfix" Regel nicht - um einen Ausgang zu nutzen, muss man eines der Aliasse genau eintippen.
+<2> TinyMUSH informiert uns, dass der Ausgang geöffnet und mit dem Zielraum verbunden wurde.
+<3> Der neue Ausgang ist jetzt ein `obvious exit` im aktuellen Raum.
+Dabei wird nur der erste Alias gezeigt.
+<4> Ich könnte auch einfach nur `s` tippen - weil ich das als Alias festgelegt habe.
+<5> Der neue Raum hat noch keinen Ausgang - Ausgänge gehen nur in eine Richtung! Wir müssen also erst mal einen Gegenausgang erstellen, der zurück führt.
+
+=== Ausgang und Gegenausgang gleichzeitig erstellen
+----
+$ @open south;s=#25,north;n <1>
+Opened.
+Linked.
+Opened.
+Linked. <2>
+----
+<1> Um den Gegenausgang gleichzeitig zu erstellen, setze ich die `directionlist` vom Gegenausgang einfach ans Ende des Kommandos, getrennt mit einem Komma.
+<2> TinyMUSH bestätigt, dass insgesamt zwei Ausgänge geöffnet und verbunden wurden.
+
+Das Endresultat hier ist dasselbe wie im Beispiel weiter oben.
+
+=== Raum, Ausgang und Gegenausgang gleichzeitig erstellen
+----
+$ @dig Azh' Cupboard=south;s,north;n <1>
+Azh' Cupboard created with room number 24.
+Opened.
+Linked.
+Opened.
+Linked. <2>
+s
++---< Azh' Cupboard >--------------------------+
++----------------------------------------------+
+Obvious exits:
+north
+n
++---< Azh' Secret Room >-----------------------+
+|It's a secret room. All the things here       |
+|emanate an air of secrecy. You feel like      |
+|you're intruding.                             |
++----------------------------------------------+
+Obvious exits:
+south
+----
+<1> Wir können einen Raum gleichzeitig mit einem Ausgang hin und einem Ausgang zurück erstellen: beim `@dig` Kommando einfach erst die `directionlist` für hin, und dann nach einem Komma die `directionlist` für zurück aufführen.
+<2> TinyMUSH bestätigt das Erstellen des Raums sowie das Öffnen und Verbinden beider Ausgänge.
+
+Auch hier ist das Endresultat dasselbe wie in den obigen Beispielen.

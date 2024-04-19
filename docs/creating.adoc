@@ -79,7 +79,7 @@ You have 500 fake internet points.
 <1> Das Ding verschwindet nicht sofort - es wird nach einer gewissen Zeit dann aufgeräumt. Bis dahin kriegt es die markierung `G` direkt nach der dbref - `G` steht für `Going` oder `Garbage` (je nachdem wen man fragt).
 <2> Nach ner Weile kommt dann diese Nachricht. Jetzt ist das Ding endgültig weg, und ich krieg mein Geld zurück.
 
-== `@use <something>`
+== `@use <something>=<message>`
 
 Beschreibung:: Weist einem Ding eine Beschreibung zu, die angezeigt wird, wenn man es mit `use` benutzt.
 
@@ -92,9 +92,62 @@ $ use nail
 You can't figure out how to use that. <1>
 $ @use nail=You prick your own thumb on the nail.
 Set.
-use nail
+$ use nail
 You prick your own thumb on the nail.
 ----
 <1> Dieser Standardsatz steht da, wenn `@use` nicht gesetzt ist.
 
 TIP: Auch `@use` ist ein MUSH-Verb, es gibt also auch @ouse und @ause - siehe auch das Thema "Verben"
+
+== `@lock <something>=<lock>`
+
+Beschreibung:: "Schliesst" ein Ding ab - schränkt ein, wer es aufheben darf
+
+Das `lock` ist ein anderes Ding oder ein Spieler.
+Der spezifizierte Spieler darf das Ding aufheben (und niemand sonst).
+
+Wenn ein Ding spezifiziert wird, gilt dieses Ding als Schlüssel:
+man darf das Ding genau dann aufheben, wenn man den Schlüssel im Inventar hat.
+
+----
+$ @create unmoving object
+unmoving object created as object #14
+$ @desc unmoving=No matter what you do, it won't budge!
+Set.
+$ @lock unmoving=#0 <1>
+Locked.
+$ drop unmoving
+Dropped.
+$ take unmoving
+You can't pick that up.
+----
+<1> Wir spezifizieren hier das Ding mit der dbref `#0` als Schlüssel. Das ist der Administrator-Raum.
+Die Idee ist, dass es unmöglich ist, diesen Schlüssel dabeizuhaben - also kann effektiv gar niemand das `unmoving object` aufheben.
+
+----
+$ @create unstoppable force
+unstoppable force created as object #15
+$ @lock unmoving object=#15 <1>
+Locked.
+$ take unmoving object
+Taken. <2>
+----
+<1> Der Schlüssel für das `unmoving object` ist jetzt die `unstoppable force`.
+<2> Da wir die `unstoppable force` im Inventar haben, dürfen wir das Ding aufheben.
+
+== `@fail <something>=<message>`
+
+Beschreibung:: Weist einem Ding eine Beschreibung zu, die angezeigt wird, wenn man versucht es aufzuheben, aber aufgrund von einem `@lock` daran gehindert wird.
+
+----
+$ @fail unmoving object=It would take an unstoppable force to
+  move that. Alas, you don't have that.
+Set.
+$ drop force
+Dropped.
+take unmoving object
+It would take an unstoppable force to move that. Alas, you
+don't have that.
+----
+
+Auch `@fail` ist ein Verb, und es gibt also `@afail` und `@ofail`. Siehe dazu auch das Thema "Verben".

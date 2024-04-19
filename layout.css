@@ -73,3 +73,12 @@ div#sidepane-buttons {
 div#sidepane-spacer {
    height: 20px;
 }
+
+div#manual-nav ul {
+   display: flex;
+}
+
+div#manual-nav li {
+   align-content: center;
+   text-align: center;
+}

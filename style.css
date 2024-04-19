@@ -202,6 +202,7 @@ div#manual dt {
 
 div#manual dd {
     width: calc(100% - 50px);
+    padding-right: 10px;
 }
 
 div#manual dd > p {
@@ -213,4 +214,10 @@ div#manual pre {
     background: url(assets/noise.png) repeat var(--console-background);
     padding: 10px;
     color: var(--console-text);
+    white-space: pre-wrap;
+}
+
+div.sect1 {
+    border-top: 2px var(--console-background) solid;
+    margin-top: 30px;
 }

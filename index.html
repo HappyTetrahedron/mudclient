@@ -53,8 +53,8 @@
             <div v-if="sidebarPane == 'help'" id="manual">
                 <div id="manual-nav">
                     <h3>Help topics:</h3>
-                    <ul v-for="page in helpPages">
-                        <li>
+                    <ul>
+                        <li v-for="page in helpPages">
                             <a @click="switchDoc(page.file)">{{ page.title }}</a>
                         </li>
                     </ul>

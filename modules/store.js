@@ -35,8 +35,16 @@ export const store = reactive({
             title: "Dinge erstellen",
         },
         {
+            file: "building",
+            title: "Räume bauen",
+        },
+        {
             file: "verbs",
             title: "Verben",
+        },
+        {
+            file: "help",
+            title: "Sich selber helfen",
         },
     ],
     currentPage: "",
@@ -88,7 +96,7 @@ export const store = reactive({
             'source': 'me',
         })
         window.localStorage.setItem("lines", JSON.stringify(this.consoleLines.filter(it => it.source != "meta")));
-        this.scrollToBottom();
+        this.scrollToBottom(true);
     },
 
     appendConsoleMetaLine(line) {

@@ -15,8 +15,7 @@ Kurzform:: `l`
 ----
 $ look
 +---< Gnu Street >-----------------------------+
-Gnu Street runs from east to west. The street is lined with block houses here, obstructing your view of the
-river. <1>
+Gnu Street runs from east to west. The street is lined with block houses here, obstructing your view of the river. <1>
 +----------------------------------------------+
 Contents:
 signpost <2>
@@ -36,8 +35,7 @@ Kurzform:: `l <something>`
 
 ----
 $ l signpost
-A wodden arrow pointing north bears the words "Student Association Shared Flat" in bold letters. Disturbingly, the font is Comic Sans... And someone stuck googly eyes to
-it for some reason.
+A wodden arrow pointing north bears the words "Student Association Shared Flat" in bold letters. Disturbingly, the font is Comic Sans... And someone stuck googly eyes to it for some reason.
 ----
 
 [TIP]
@@ -52,6 +50,9 @@ Dazu kann man nur einen Teil eines mehrwörtrigen Namens nennen - z.B. `look pap
 Es muss aber eindeutig sein, sonst ist der Server verwirrt.
 
 Für noch mehr Effizienz kann man auch ein eindeutiges Präfix von einem Wort im Namen verwenden, z.B. `look pap`, `look prop`, `look hover`.
+
+Das funktioniert bei Dingen und Spielern, aber leider nicht bei Ausgängen - bei jenen kann man nur genau die vordefinierten Kürzel verwenden.
+Wenn der Ersteller mal vergessen hat, `s` als Alias für `south` zu definieren - ja, dann geht's eben nicht.
 ====
 
 == `inventory`

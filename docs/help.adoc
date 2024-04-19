@@ -1,0 +1,95 @@
+= Sich selber helfen
+
+Der MUSH ist sehr gut dokumentiert.
+Für jedes Kommando gibt es detaillierte Beschreibungen, was genau das Kommando macht und unter welchen Bedingungen es wie funktioniert.
+Das geht extrem ins Detail - manchmal fast etwas zu sehr.
+
+== `help <topic>`
+Beschreibung:: Zeigt dir die Hilfe zu einem Kommando oder Thema an
+Kurzform:: `h`
+
+----
+$ help @create
+Command: @create <name> [=<cost>] <1>
+Creates a thing with the specified name.  Creation costs either <cost>
+or 10 coins, whichever is greater. The value of a thing is proportional
+to its cost, specifically, value=(cost/5)-1.  The value may not be greater
+than 100, values that would be greater than 100 are rounded down to 100. <2>
+See also: @destroy, TYPES OF OBJECTS. <3>
+----
+<1> Oben steht oft eine Zusammenfassung davon, wie das Kommando eingesetzt wird.
+<2> Dem folgt eine mega detaillierte Beschreibung. Hier wird viel über den Wert eines Dings geredet, allerdings wird leider nicht erklärt, was genau das für eine Rolle spielt - diese Information müssten wir anderswo in der Hilfe finden.
+(Wenn ihr das findet, lasst es mich wissen - ich weiss immer noch nicht was der Wert eines Objekts für eine Rolle spielt.)
+<3> Am Ende steht oft eine Liste von verwandten Themen, die man auch mit `help` anschauen kann. Hier zum Beispiel mit `help types of objects` - bzw. eigentlich `help object types`, denn die Anleitung ist hier inkonsistent. Das kommt vor.
+
+----
+$ help topics <1>
+
+Help is available on the following topics:
+ 
+About Help		Attributes		Attribute Owners
+Attribute Flags		Boolean Values		Caller
+Command List		Comsys			Conn Reasons
+[...]
+SWITCHES		Syntax			User Commands		
+Zone Control		ZONE OBJECTS
+----
+<1> Hier kriegt man sozusagen ein Inhaltsverzeichnis.
+Das bezieht sich aber nur auf die Themen - zusätzlich gibt es noch Hilfe zu jedem einzelnen Kommando.
+
+----
+help @link
+
+Command: @link <object>[=<dbref> | here | home | variable]
+
+When used on a player or a thing, this command sets the object's home
+to the indicated location.  The destination must be owned by you or be an
+ABODE room, or you must have the link_any_home power.
+
+When used on a room, this command sets the room's drop-to, where objects
+dropped in the room go.  The destination must be a room that is either owned
+by you or is LINK_OK.
+
+For exits, this command sets the destination if the exit is currently
+unlinked, and you control the destination or it is set LINK_OK. You can
+@link an unlinked exit regardless of who owns it or the lock set on it;
+you are made the owner if you successfully link to the destination. 
+[...]
+
+{ 'help @link2' for more } <1>
+----
+<1> Manchmal ist der Hilfetext in mehrere Teile aufgeteilt. Dann gibt's so einen Hinweis.
+
+== `man`
+Beschreibung:: Zeigt dir die MUSH-Anleitung
+
+----
+$ man intro <1>
+MUSH Manual Version 2.008
+
+  Written for TinyMUSH version 2.2.1
+
+Section I: Getting Started. Basic commands and objects.
+Introduction: A brief history of MUSH. Configurations and server differences.
+
+1. The Basics
+ 1.1  Some information
+ 1.2  Basic commands
+
+(Continued in 'man intro2'.)
+----
+<1> Ich empfehle, bei `man intro` anzufangen und das Inhaltsverzeichnis anzugucken.
+Man kann dann eine bestimmte Sektion lesen, z.B. mit `man 1.2`
+
+== Online-Ressourcen
+
+Manchmal weiss man einfach nicht, welches `help`-Thema man lesen muss, um eine bestimmte Info zu bekommen.
+Ich öffne dann gerne mal das gesamte Helpfile (also die Textdatei, in der all dieser Kram drin steht), und verwende `Ctrl+F` um darin zu suchen.
+
+Die Hilfedatei findet sich zum Glück https://github.com/TinyMUSH/TinyMUSH/blob/master/docs/help.txt[im Internet].
+
+Hier noch ein paar mehr nützliche Links:
+
+* https://github.com/TinyMUSH/TinyMUSH/blob/master/docs/help.txt[Die Hilfedatei]
+* https://github.com/TinyMUSH/TinyMUSH/blob/master/docs/mushman.txt[Das Mush Manual (`man`)]
+* https://www.metamage.com/mush/croaker/[Anleitung mit Beispielen zum Programmieren]
