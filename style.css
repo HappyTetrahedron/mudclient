@@ -95,6 +95,10 @@ p.console-line {
     margin: 0;
 }
 
+span.console-line {
+    white-space: pre-wrap;
+}
+
 .console-line.me {
     color: var(--console-highlight);
 }
