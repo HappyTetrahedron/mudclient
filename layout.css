@@ -36,8 +36,6 @@ div#console {
 div#scrollback {
    height: calc(100% - 30px);
    overflow: auto;
-   display: flex;
-   flex-direction: column-reverse;
 }
 
 div#input {

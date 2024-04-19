@@ -22,7 +22,7 @@
                 <p 
                     class="console-line" 
                     :class="line.source"
-                    v-for="line in consoleLinesReversed"
+                    v-for="line in consoleLines"
                 >
                     <span class="console-line">{{ line.text }}</span>
                 </p>
@@ -39,6 +39,7 @@
                 <button v-if="sidebarPane != 'none'" @click="closeSidebar">x</button>
                 <button @click="activateHelp">?</button>
                 <button @click="activateState">!</button>
+                <button @click="scrollToBottom(true)">&#x290B;</button>
             </div>
             <div id="sidepane-spacer"></div>
             <div v-if="sidebarPane == 'state'" id="state">

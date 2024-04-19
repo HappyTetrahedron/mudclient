@@ -8,6 +8,7 @@ export const store = reactive({
     server: null,
     historyPos: 0,
     draftInput: "",
+    lastScrollHeight: 0,
 
     gameState: {},
 
@@ -45,12 +46,6 @@ export const store = reactive({
         return this.consoleLines.filter(it => it.source === "me");
     },
 
-    get consoleLinesReversed() {
-        var copy = this.consoleLines.map(it => it);
-        copy.reverse();
-        return copy;
-    },
-
     sendMessage(event) {
         event.preventDefault();
         if (!this.connected) {
@@ -84,6 +79,7 @@ export const store = reactive({
             'source': 'them',
         })
         window.localStorage.setItem("lines", JSON.stringify(this.consoleLines.filter(it => it.source != "meta")));
+        this.scrollToBottom();
     },
 
     appendConsoleSendLine(line) {
@@ -92,6 +88,7 @@ export const store = reactive({
             'source': 'me',
         })
         window.localStorage.setItem("lines", JSON.stringify(this.consoleLines.filter(it => it.source != "meta")));
+        this.scrollToBottom();
     },
 
     appendConsoleMetaLine(line) {
@@ -99,6 +96,7 @@ export const store = reactive({
             'text': line,
             'source': 'meta',
         })
+        this.scrollToBottom();
     },
 
     appendConsoleLines(linesText) {
@@ -137,6 +135,16 @@ export const store = reactive({
         updatePageContent(this.currentPage);
     },
 
+    scrollToBottom (force) {
+        setTimeout(() => {
+            let scrollback = document.getElementById("scrollback");
+            if (force || scrollback.scrollTop >= this.lastScrollHeight - 100 - scrollback.clientHeight ) {
+                scrollback.scrollTop = scrollback.scrollHeight;
+            }
+            this.lastScrollHeight = scrollback.scrollHeight
+        }, 10)
+    },
+
     async init() {
         try {
             var lines = window.localStorage.getItem("lines");
@@ -152,9 +160,10 @@ export const store = reactive({
                 this.setConnected(false);
             }.bind(this);
             this.connected = true;
-             setInterval(() => {
+            setInterval(() => {
                 Api.fetchApi().then(json => this.setGameState(json))
-             }, 5000)
+            }, 5000)
+            this.scrollToBottom(true);
         }
         catch (error) {
             console.log("Could not establish websocket connection.", error);
@@ -162,7 +171,6 @@ export const store = reactive({
         }
     }
 })
-
 
 let updatePageContent = async (page) => {
     let resp = await fetch(`/docs/${page}.html`);
