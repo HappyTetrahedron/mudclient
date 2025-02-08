@@ -9,10 +9,13 @@
     --link-color: #444e2c;
     --link-color-dark: #202512;
 
+    --error-color: #7c344e;
+
     --console-background: #080808;
     --console-text: #dedede;
     --console-soft: #777777;
     --console-highlight: #99bb63;
+    --console-highlight2: #4a8168;
 }
 
 /* General styling */
@@ -101,6 +104,10 @@ span.console-line {
 
 .console-line.me {
     color: var(--console-highlight);
+}
+
+.console-line.auto-me {
+    color: var(--console-highlight2);
 }
 
 .console-line.meta {
@@ -220,4 +227,28 @@ div#manual pre {
 div.sect1 {
     border-top: 2px var(--console-background) solid;
     margin-top: 30px;
+}
+
+/* creators */
+
+.error-message {
+    color: var(--error-color);
+}
+
+div.creator textarea {
+    height: 6em;
+    width: 100%;
+}
+
+div.creator input[type=text] {
+    width: 100%;
+}
+
+div.creator button {
+    width: 100%;
+    height: 3em;
+}
+
+div.creator {
+    min-width: 300px;
 }

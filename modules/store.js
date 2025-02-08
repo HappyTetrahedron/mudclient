@@ -49,6 +49,28 @@ export const store = reactive({
     ],
     currentPage: "",
 
+    thing: {
+        name: "",
+        desc: "",
+        use: "",
+        ouse: "",
+        lock: false,
+        fail: "",
+        ofail: "",
+        createError: "",
+    },
+
+    room: {
+        name: "",
+        desc: "",
+        exitNameTo: "",
+        exitAliasesTo: "",
+        exitNameFrom: "",
+        exitAliasesFrom: "",
+        teleport: true,
+        link: false,
+        hasOpenPermission: false,
+    },
 
     get sentLines() {
         return this.consoleLines.filter(it => it.source === "me");
@@ -63,6 +85,12 @@ export const store = reactive({
         this.appendConsoleSendLine(this.consoleInput);
         this.setInput("");
         this.historyPos = 0;
+    },
+
+    sendAutoMessage(message) {
+        console.log(message);
+        this.server.send(message);
+        this.appendConsoleAutoSendLine(message);
     },
 
     processKeyEvent(event) {
@@ -99,6 +127,15 @@ export const store = reactive({
         this.scrollToBottom(true);
     },
 
+    appendConsoleAutoSendLine(line) {
+        this.consoleLines.push({
+            'text': line,
+            'source': 'auto-me',
+        })
+        window.localStorage.setItem("lines", JSON.stringify(this.consoleLines.filter(it => it.source != "meta")));
+        this.scrollToBottom(true);
+    },
+
     appendConsoleMetaLine(line) {
         this.consoleLines.push({
             'text': line,
@@ -112,6 +149,114 @@ export const store = reactive({
         lines.forEach(element => {
             this.appendConsoleLine(element);
         });
+    },
+
+    autoCreateThing(event) {
+        console.log("Creating thing...")
+        event.preventDefault();
+        if (this.thing.name == "") {
+            this.thing.createError = "Please specify a name for your thing.";
+            return;
+        }
+        let name = this.sanitize(this.thing.name);
+        this.sendAutoMessage(`@create ${name}`);
+
+        if (this.thing.desc != "") {
+            this.sendAutoMessage(`@desc ${name}=${this.sanitize(this.thing.desc)}`);
+        }
+
+        if (this.thing.use != "") {
+            this.sendAutoMessage(`@use ${name}=${this.sanitize(this.thing.use)}`);
+        }
+
+        if (this.thing.ouse != "") {
+            this.sendAutoMessage(`@ouse ${name}=${this.sanitize(this.thing.ouse)}`);
+        }
+
+        if (this.thing.lock) {
+            this.sendAutoMessage(`@lock ${name}=#0`);
+
+            if (this.thing.fail != "") {
+                this.sendAutoMessage(`@fail ${name}=${this.sanitize(this.thing.fail)}`);
+            }
+
+            if (this.thing.ofail != "") {
+                this.sendAutoMessage(`@ofail ${name}=${this.sanitize(this.thing.ofail)}`);
+            }
+        }
+
+        this.resetThing();
+    },
+
+    autoCreateRoom(event) {
+        console.log("Creating room...")
+        event.preventDefault();
+        if (this.room.name == "") {
+            this.room.createError = "Please specify a name for your room.";
+            return;
+        }
+
+        if (this.room.link) {
+            if (this.room.exitNameFrom == "" || this.room.exitNameTo == "") {
+                this.room.createError = "If you want to link this room up, please specify names for both exits.";
+                return;
+            }
+            let exitTo = this.genExitList(this.room.exitNameTo, this.room.exitAliasesTo)
+            let exitFrom = this.genExitList(this.room.exitNameFrom, this.room.exitAliasesFrom)
+            if (this.room.hasOpenPermission) {
+                this.sendAutoMessage(`@dig ${this.sanitize(this.room.name)}=${exitTo},${exitFrom}`)
+            }
+            else {
+                this.sendAutoMessage(`@dig ${this.sanitize(this.room.name)}`)
+                this.sendAutoMessage(`@qmail Alinea/Link Request from %n=Please create an exit named ${exitTo} from [name(loc(me))] ([loc(me)]) to ${this.sanitize(this.room.name)} ([lastcreate(me, R)]), and a corresponding return exit called ${exitFrom}. Thanks :)%r@tel me=[loc(me)]%r@open ${exitTo}=[lastcreate(me, R)]%r@tel me=[lastcreate(me, R)]%r@open ${exitFrom}=[loc(me)]`)
+            }
+        }
+        else {
+            this.sendAutoMessage(`@dig ${this.sanitize(this.room.name)}`)
+        }
+
+        if (this.room.desc != "") {
+            this.sendAutoMessage(`@desc lastcreate(me, R)=${this.sanitize(this.room.desc)}`)
+        }
+
+        if (this.room.teleport) {
+            this.sendAutoMessage("@tel me=[lastcreate(me, R)]")
+        }
+
+        this.resetRoom();
+
+    },
+
+    resetThing() {
+        this.thing.createError = "";
+        this.thing.name = "";
+        this.thing.desc = "";
+        this.thing.fail = "";
+        this.thing.ofail = "";
+        this.thing.use = "";
+        this.thing.ouse = "";
+    },
+
+    resetRoom() {
+        this.room.createError = "";
+        this.room.name = "";
+        this.room.desc = "";
+        this.room.exitNameTo = "";
+        this.room.exitNameFrom = "";
+        this.room.exitAliasesTo = "";
+        this.room.exitAliasesFrom = "";
+    },
+
+    sanitize(message) {
+        let msg = message.normalize();
+        msg = msg.replace(/(?:\r\n|\r|\n)/g, '%r');
+        return msg;
+    },
+
+    genExitList(exitName, exitAliases) {
+        let aliasList = exitAliases.split(',').map(it => it.trim()).map(it => this.sanitize(it)).filter(it => it != "");
+        aliasList.unshift(this.sanitize(exitName));
+        return aliasList.join(";")
     },
 
     setInput(consoleInput) {
@@ -136,6 +281,14 @@ export const store = reactive({
 
     activateState(evt) {
         this.sidebarPane = "state";
+    },
+
+    activateThingCreator(evt) {
+        this.sidebarPane = "thingcreator";
+    },
+
+    activateRoomCreator(evt) {
+        this.sidebarPane = "roomcreator";
     },
 
     switchDoc(newPage) {

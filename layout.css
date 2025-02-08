@@ -59,7 +59,7 @@ div#sidepane {
    top: 0;
    right: 0;
    max-width: 500px;
-   min-width: 50px;
+   min-width: 80px;
    overflow-y: auto;
    overflow-x: hidden;
    max-height: calc(100% - 20px);

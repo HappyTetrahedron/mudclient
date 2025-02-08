@@ -39,6 +39,8 @@
                 <button v-if="sidebarPane != 'none'" @click="closeSidebar">x</button>
                 <button @click="activateHelp">?</button>
                 <button @click="activateState">!</button>
+                <button @click="activateThingCreator">T</button>
+                <button @click="activateRoomCreator">R</button>
                 <button @click="scrollToBottom(true)">&#x290B;</button>
             </div>
             <div id="sidepane-spacer"></div>
@@ -58,6 +60,92 @@
                             <a @click="switchDoc(page.file)">{{ page.title }}</a>
                         </li>
                     </ul>
+                </div>
+                <div id="manual-content"></div>
+            </div>
+            <div v-if="sidebarPane == 'thingcreator'" id="thingcreator">
+                <div>
+                    <h3>Thing Creator</h3>
+                    <p>Please make sure you are connected and logged in.</p>
+                    <div id="thing-creator" class="creator" v-if="connected">
+                        <p>
+                            <input type="text" id="thingname" v-model="thing.name" placeholder="Name of your new thing" />
+                        </p>
+                        <p>
+                            <textarea id="thingdesc" v-model="thing.desc" placeholder="Description of your thing, which players see when they look at it."></textarea>
+                        </p>
+                        <p>
+                            <textarea id="thinguse" v-model="thing.use" placeholder="Text you see when you use the thing"></textarea>
+                        </p>
+                        <p>
+                            <textarea id="thingouse" v-model="thing.ouse" placeholder="Text everyone else sees when you use the thing. Your name (or the name of the user) will be automatically added in front of this text."></textarea>
+                        </p>
+                        <p>
+                            <input type="checkbox" v-model="thing.lock" /> Lock Object
+                        </p>
+                        <p v-if="thing.lock">
+                            <textarea id="thingfail" v-model="thing.fail" placeholder="Text you see when you try and fail to pick up the thing"></textarea>
+                        </p>
+                        <p v-if="thing.lock">
+                            <textarea id="thingofail" v-model="thing.ofail" placeholder="Text everyone else sees when you fail to pick up the thing. Your name (or the name of the user) will be automatically added in front of this text."></textarea>
+                        </p>
+                        <p>
+                            <button id="thingsubmit" @click="autoCreateThing">Create</button>
+                        </p>
+                        <p class="error-message">{{ thing.createError }}</p>
+                    </div>
+                </div>
+                <div id="manual-content"></div>
+            </div>
+            <div v-if="sidebarPane == 'roomcreator'" id="roomcreator">
+                <div>
+                    <h3>Room Creator</h3>
+                    <p>Please make sure you are connected and logged in.</p>
+                    <div id="room-creator" class="creator" v-if="connected">
+                        <p>
+                            <input type="text" id="roomname" v-model="room.name" placeholder="Name of your new room" />
+                        </p>
+                        <p>
+                            <textarea id="roomdesc" v-model="room.desc" placeholder="Description of your room, which players see when they enter it."></textarea>
+                        </p>
+                        <p>
+                            <input type="checkbox" v-model="room.link" /> Create an exit leading from my current location to the new room, and back.
+                        </p>
+                        <div v-if="room.link">
+                            <p>
+                                Name of the exit leading from here to your new room:
+                                <br />
+                                <input type="text" id="roomexittoname" v-model="room.exitNameTo" placeholder="e.g. 'southwest'" />
+                            </p>
+                            <p>
+                                Comma-separated list of aliases for the exit leading from here to your new room:
+                                <br />
+                                <input type="text" id="roomexittoalias" v-model="room.exitAliasesTo" placeholder="e.g. 'sw'" />
+                            </p>
+                            <p>
+                                Name of the exit leading from your new room back here:
+                                <br />
+                                <input type="text" id="roomexitfromname" v-model="room.exitNameFrom" placeholder="e.g. 'northeast'" />
+                            </p>
+                            <p>
+                                Comma-separated list of aliases for the exit leading from your new room back here:
+                                <br />
+                                <input type="text" id="roomexitfromalias" v-model="room.exitAliasesFrom" placeholder="e.g. 'ne'" />
+                            </p>
+                            <p>
+                                Check this if you personally created the room you're currently in:
+                                <br />
+                                <input type="checkbox" v-model="room.hasOpenPermission" /> I am allowed to create exits in the current location
+                            </p>
+                        </div>
+                        <p>
+                            <input type="checkbox" v-model="room.teleport" /> Teleport me to my new room
+                        </p>
+                        <p>
+                            <button id="roomsubmit" @click="autoCreateRoom">Create</button>
+                        </p>
+                        <p class="error-message">{{ room.createError }}</p>
+                    </div>
                 </div>
                 <div id="manual-content"></div>
             </div>
